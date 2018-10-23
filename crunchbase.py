@@ -103,7 +103,7 @@ while i < len(newArr):
 
     if i == len(newArr) - 1 or i%200 == 0:
         fileName = 'newSaveCrunchbaseScrape' + str(i/200) + '.txt'
-        with open(filename, 'w') as f:
+        with open(fileName, 'w') as f:
             for item in yugeArray:
                 f.write("%s\n" % item)
 
