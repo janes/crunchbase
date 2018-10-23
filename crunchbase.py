@@ -1,7 +1,6 @@
 import requests
 import json
 
-
 yugeArray= []
 class Company:
     def __init__(self, name, founded, short_description, min_employees, max_employees, email, phone, alias, homepage, country, region, zip1, street1, street2, homepage2, facebook, twitter, linkedin, firstname, lastname, born, bio, api_url):
@@ -102,10 +101,9 @@ while i < len(newArr):
 
     yugeArray.append(newComp)
 
-    fileName = 'newSaveCrunchbaseScrape' + str(i/200) + '.txt'
-    print fileName
     if i == len(newArr) - 1 or i%200 == 0:
-        with open('newSaveCrunchbaseScrape.txt', 'w') as f:
+        fileName = 'newSaveCrunchbaseScrape' + str(i/200) + '.txt'
+        with open(filename, 'w') as f:
             for item in yugeArray:
                 f.write("%s\n" % item)
 
