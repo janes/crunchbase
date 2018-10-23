@@ -20,7 +20,7 @@ while i < len(newArr):
     response = requests.get(url)
     data = response.json()
 
-    newComp = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+    newComp = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
 
     if len(data) != 1:
         hqUrl = "https://api.crunchbase.com/v3.1/organizations/" + newArr[i] + "/offices?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
