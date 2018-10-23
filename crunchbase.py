@@ -86,7 +86,7 @@ while i < len(newArr):
 
     yugeArray.append(newComp)
 
-    if i == len(newArr) - 1 or i%20 == 0:
+    if i == len(newArr) - 1 or i%200 == 0:
         fileName = 'newSaveCrunchbaseScrape' + str(i/200) + '.csv'
         with open(fileName, 'w') as f:
             writer = csv.writer(f)
