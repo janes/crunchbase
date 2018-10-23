@@ -1,32 +1,8 @@
 import requests
 import json
+import csv
 
 yugeArray= []
-class Company:
-    def __init__(self, name, founded, short_description, min_employees, max_employees, email, phone, alias, homepage, country, region, zip1, street1, street2, homepage2, facebook, twitter, linkedin, firstname, lastname, born, bio, api_url):
-        self.name = name
-        self.founded = founded
-        self.short_description = short_description
-        self.min_employees = min_employees
-        self.max_employees = max_employees
-        self.email = email
-        self.phone = phone
-        self.alias = alias
-        self.homepage = homepage
-        self.country = country
-        self.region = region
-        self.zip1 = zip1
-        self.street1 = street1
-        self.street2 = street2
-        self.homepage2 = homepage2
-        self.facebook = facebook
-        self.twitter = twitter
-        self.linkedin = linkedin
-        self.firstname = firstname
-        self.lastname = lastname
-        self.born = born
-        self.bio = bio
-        self.api_url = api_url
 
 with open("cleanedCompanyNames1.txt", 'r') as names:
     newArr = []
@@ -59,6 +35,10 @@ while i < len(newArr):
         foundResponse = requests.get(foundUrl)
         foundData = foundResponse.json()
 
+        catUrl = "https://api.crunchbase.com/v3.1/organizations/" + newArr[i] + "/categories?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
+        catResponse = requests.get(catUrl)
+        catData = catResponse.json()
+
         newComp[0] = data["data"]['properties']['name']
         newComp[1] = data["data"]['properties']['founded_on']
         if data["data"]['properties']['short_description'] != None:
@@ -69,6 +49,7 @@ while i < len(newArr):
         newComp[6] = data["data"]['properties']['phone_number']
         newComp[7] = data["data"]['properties']['also_known_as']
         newComp[8] = data["data"]['properties']['homepage_url']
+
 
         if hqData['data']['paging']['total_items'] != 0:
             newComp[9] = hqData['data']['items'][0]['properties']['country']
@@ -98,18 +79,16 @@ while i < len(newArr):
             newComp[21] =  foundData['data']['items'][x]['properties']['bio']
             newComp[22] =  foundData['data']['items'][x]['properties']['api_url']
             x += 1
+        j = 0
+        while j < len(catData['data']['items']):
+            newComp[23 + j] = catData['data']['items'][j]['properties']['name']
+            j += 1
 
     yugeArray.append(newComp)
 
-    if i == len(newArr) - 1 or i%200 == 0:
-        fileName = 'newSaveCrunchbaseScrape' + str(i/200) + '.txt'
+    if i == len(newArr) - 1 or i%20 == 0:
+        fileName = 'newSaveCrunchbaseScrape' + str(i/200) + '.csv'
         with open(fileName, 'w') as f:
-            for item in yugeArray:
-                f.write("%s\n" % item)
-
+            writer = csv.writer(f)
+            writer.writerows(yugeArray)
     i += 1
-
-
-
-
-
