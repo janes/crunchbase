@@ -20,7 +20,7 @@ while i < pages:
     nextUrl = str(response['data']['paging']['next_page_url']) + "&user_key=188fa1875a4cf6c62d23c98e9afb01ed" 
     i += 1
 
-
+print len(newArr)
 
 yugeArray= []
 i = 0
