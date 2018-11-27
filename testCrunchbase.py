@@ -1,7 +1,9 @@
 import requests
 import csv
 import sys
-reload(sys)
+from importlib import reload
+importlib.reload(sys)
+
 sys.setdefaultencoding('utf8')
 
 url = "https://api.crunchbase.com/v3.1/organizations"
