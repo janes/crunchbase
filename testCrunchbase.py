@@ -1,5 +1,8 @@
 import requests
 import csv
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 url = "https://api.crunchbase.com/v3.1/organizations"
 querystring = {"locations":"North Carolina", "user_key":"188fa1875a4cf6c62d23c98e9afb01ed"}
@@ -17,7 +20,8 @@ while i < pages:
     while j < len(response['data']['items']):
         newArr.append(response['data']['items'][j]['properties']['api_path'])
         j+= 1
-    nextUrl = str(response['data']['paging']['next_page_url']) + "&user_key=188fa1875a4cf6c62d23c98e9afb01ed" 
+    if response['data']['paging']['next_page_url']:
+        nextUrl = response['data']['paging']['next_page_url'].encode('utf-8') + "&user_key=188fa1875a4cf6c62d23c98e9afb01ed" 
     i += 1
 
 print(len(newArr))
@@ -90,13 +94,13 @@ while i < len(newArr):
             x += 1
         j = 0
         while j < len(catData['data']['items']):
-            newComp[23 + j] = catData['data']['items'][j]['properties']['name']
+            newComp.append(catData['data']['items'][j]['properties']['name'])
             j += 1
 
     yugeArray.append(newComp)
 
     if i == len(newArr) - 1 or i%300 == 0:
-        fileName = 'newSaveFullCrunchbaseScrape' + str(i/50) + '.csv'
+        fileName = 'newSaveFullCrunchbaseScrape' + str(i/300) + '.csv'
         with open(fileName, 'w') as f:
             writer = csv.writer(f)
             writer.writerows(yugeArray)
