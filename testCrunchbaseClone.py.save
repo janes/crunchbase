@@ -114,11 +114,10 @@ while i < len(newArr):
             numberOfFunding = fundingData['data']['paging']['total_items'] - 1
             i123 = 0
             while (i123 < numberOfFunding):
-		try:
+
                     newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['type'])
 
                     newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['type'])
-                
                     newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['investor_type'])
                     newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['founded_on'])
                     newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['short_description'])
