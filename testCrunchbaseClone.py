@@ -147,8 +147,8 @@ while i < len(newArr):
 
     yugeArray.append(newComp)
 
-    if i == len(newArr) - 1 or i%5 == 0:
-        fileName = 'newSaveFullCrunchbaseScrape' + str((i+2100)/5) + '.csv'
+    if i == len(newArr) - 1 or i%100 == 0:
+        fileName = 'newSaveFullCrunchbaseScrape' + str((i+2100)/100) + '.csv'
         with open(fileName, 'w') as f:
             writer = csv.writer(f)
             writer.writerows(yugeArray)
