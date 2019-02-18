@@ -53,9 +53,19 @@ while i < len(newArr):
         catUrl = "https://api.crunchbase.com/v3.1/" + newArr[i] + "/categories?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
         catResponse = requests.get(catUrl)
         catData = catResponse.json()
+        print(newArr[i])
+        url13 = "https://api.crunchbase.com/v3.1/" + newArr[i] + '/funding_rounds/' + "?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
+        response123 = requests.get(url13)
+        fundingData = response123.json()
 
         newComp[0] = data["data"]['properties']['name']
         newComp[1] = data["data"]['properties']['founded_on']
+        newComp[23] = data["data"]['properties']['is_closed']
+        newComp[24] = data["data"]['properties']['closed_on']
+        newComp[25] = data["data"]['properties']['stock_exchange']
+        newComp[26] = data["data"]['properties']['stock_symbol']
+        newComp[27] = data["data"]['properties']['total_funding_usd']
+        newComp[28] = data["data"]['properties']['number_of_investments']
         if data["data"]['properties']['short_description'] != None:
             newComp[2] = data["data"]['properties']['short_description'].encode('utf-8')
         newComp[3] = data["data"]['properties']['num_employees_min']
@@ -88,16 +98,51 @@ while i < len(newArr):
 
         x = 0
         while x < len(foundData['data']['items']):
-            newComp[18] = foundData['data']['items'][x]['properties']['first_name']
-            newComp[19] =  foundData['data']['items'][x]['properties']['last_name']
-            newComp[20] =  foundData['data']['items'][x]['properties']['born_on']
-            newComp[21] =  foundData['data']['items'][x]['properties']['bio']
-            newComp[22] =  foundData['data']['items'][x]['properties']['api_url']
+            newComp.append(foundData['data']['items'][x]['properties']['first_name'])
+            newComp.append(foundData['data']['items'][x]['properties']['last_name'])
+            newComp.append(foundData['data']['items'][x]['properties']['born_on'])
+            newComp.append(foundData['data']['items'][x]['properties']['bio'])
+            newComp.append(foundData['data']['items'][x]['properties']['api_url'])
             x += 1
         j = 0
+        newComp.append("BREAK")
         while j < len(catData['data']['items']):
             newComp.append(catData['data']['items'][j]['properties']['name'])
             j += 1
+        newComp.append("BREAK")
+        if (fundingData['data']['paging']['total_items'] != 0):
+            numberOfFunding = fundingData['data']['paging']['total_items'] - 1
+            i123 = 0
+            while (i123 < numberOfFunding):
+                print(fundingData['data']['items'][i123]['relationships']['investments'][0]['type'])
+
+                print(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['type'])
+                try:
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['investor_type'])
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['founded_on'])
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['short_description'])
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['total_funding_usd'])
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['number_of_investments'])
+
+
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['money_invested_usd'])
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['announced_on'])
+                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['is_lead_investor'])
+                except:
+                    print(1)
+                newComp.append(fundingData['data']['items'][i123]['type'])
+
+                newComp.append(fundingData['data']['items'][i123]['properties']['series'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['rank'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['pre_money_valuation'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['money_raised_usd'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['pre_money_valuation_usd'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['money_raised'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['updated_at'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['target_money_raised_usd'])
+                newComp.append(fundingData['data']['items'][i123]['properties']['announced_on'])
+                i123 += 1
+
 
     yugeArray.append(newComp)
 
