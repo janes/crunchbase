@@ -14,7 +14,7 @@ newArr = []
 pages = response['data']['paging']['number_of_pages']
 
 i = 0
-while i < pages:
+while i < pages-1:
     if i != 0:
         print(nextUrl)
         response = requests.get(nextUrl).json()
