@@ -121,7 +121,7 @@ while i < len(newArr):
             i123 = 0
             newFund.append(data["data"]['uuid'])
             while (i123 < numberOfFunding):
-<<<<<<< HEAD
+
                 newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['type'])
 
                 newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['type'])
@@ -131,19 +131,6 @@ while i < len(newArr):
                     newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['short_description'])
                     newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['total_funding_usd'])
                     newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['number_of_investments'])
-=======
-		try:
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['type'])
-
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['type'])
-                
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['investor_type'])
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['founded_on'])
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['short_description'])
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['total_funding_usd'])
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['number_of_investments'])
->>>>>>> 9636d41db137b23d48db3ab9b430e0762c45a0b5
-
 
                     newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['money_invested_usd'])
                     newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['announced_on'])
@@ -168,7 +155,7 @@ while i < len(newArr):
     founderArray.append(newFound)
     fundingArray.append(newFund)
 
-<<<<<<< HEAD
+
     if i == len(newArr) - 1 or i%200 == 0:
         fileName = 'newSaveFullCrunchbaseScrape' + str((i)/200) + '.csv'
         with open(fileName, 'w') as f:
@@ -183,11 +170,4 @@ while i < len(newArr):
             writer = csv.writer(f)
             writer.writerows(fundingArray)
     i += 1
-=======
-    if i == len(newArr) - 1 or i%100 == 0:
-        fileName = 'newSaveFullCrunchbaseScrape' + str((i+2100)/100) + '.csv'
-        with open(fileName, 'w') as f:
-            writer = csv.writer(f)
-            writer.writerows(yugeArray)
-    i += 1
->>>>>>> 9636d41db137b23d48db3ab9b430e0762c45a0b5
+
