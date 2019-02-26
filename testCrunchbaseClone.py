@@ -12,6 +12,7 @@ response = requests.request("GET", url, params=querystring).json()
 nextUrl = ""
 newArr = []
 pages = response['data']['paging']['number_of_pages']
+print(pages)
 
 i = 0
 while i < pages-1:
