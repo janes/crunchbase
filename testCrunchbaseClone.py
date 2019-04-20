@@ -37,11 +37,14 @@ print(len(newArr))
 yugeArray= []
 founderArray = []
 fundingArray = []
-i = 0
+i = 1400
 while i < len(newArr):
-    url = "https://api.crunchbase.com/v3.1/" + newArr[i] + "?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
-    response = requests.get(url)
-    data = response.json()
+    try:
+        url = "https://api.crunchbase.com/v3.1/" + newArr[i] + "?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
+        response = requests.get(url)
+        data = response.json()
+    except:
+        print("initial request")
 
     newComp = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
     newFound = []
@@ -52,23 +55,34 @@ while i < len(newArr):
             hqUrl = "https://api.crunchbase.com/v3.1/" + newArr[i] + "/offices?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
             hqResponse = requests.get(hqUrl)
             hqData = hqResponse.json()
-
+        except:
+            print(1)
+        try:
             webUrl = "https://api.crunchbase.com/v3.1/" + newArr[i] + "/websites?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
             webResponse = requests.get(webUrl)
             webData = webResponse.json()
-
+        except:
+            print(1)
+        try:
             foundUrl = "https://api.crunchbase.com/v3.1/" + newArr[i] + "/founders?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
             foundResponse = requests.get(foundUrl)
             foundData = foundResponse.json()
-
+        except:
+            print(1)
+        try:
             catUrl = "https://api.crunchbase.com/v3.1/" + newArr[i] + "/categories?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
             catResponse = requests.get(catUrl)
             catData = catResponse.json()
+        except:
+            print(1)
+        try:
             print(newArr[i])
-            url13 = "https://api.crunchbase.com/v3.1/" + newArr[i] + '/funding_rounds/' + "?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
+            url13 = "https://api.crunchbase.com/v3.1/" + newArr[i] + "/funding_rounds?user_key=188fa1875a4cf6c62d23c98e9afb01ed"
             response123 = requests.get(url13)
             fundingData = response123.json()
-
+        except:
+            print("funding query")
+        try:
             newComp[29] = data["data"]['uuid']
             newComp[0] = data["data"]['properties']['name']
             newComp[1] = data["data"]['properties']['founded_on']
@@ -86,8 +100,9 @@ while i < len(newArr):
             newComp[6] = data["data"]['properties']['phone_number']
             newComp[7] = data["data"]['properties']['also_known_as']
             newComp[8] = data["data"]['properties']['homepage_url']
-
-
+        except:
+            print("basic data")
+        try:
             if hqData['data']['paging']['total_items'] != 0:
                 newComp[9] = hqData['data']['items'][0]['properties']['country']
                 newComp[10] = hqData['data']['items'][0]['properties']['region']
@@ -95,7 +110,9 @@ while i < len(newArr):
                 if hqData['data']['items'][0]['properties']['street_1'] != None:
                     newComp[12] = hqData['data']['items'][0]['properties']['street_1'].encode('utf-8')
                 newComp[13] = hqData['data']['items'][0]['properties']['street_2']
-
+        except:
+            print("hq data")
+        try:
             z = 0
             while z < len(webData['data']['items']):
                 if z == 0:
@@ -107,73 +124,78 @@ while i < len(newArr):
                 if z == 3:
                     newComp[17] = webData['data']['items'][z]['properties']['url']
                 z += 1
-
+        except:
+            print("web urls")
+        try:
             x = 0
-            newFound.append(data["data"]['uuid'])
+            
             while x < len(foundData['data']['items']):
-                newFound.append(foundData['data']['items'][x]['properties']['first_name'])
-                newFound.append(foundData['data']['items'][x]['properties']['last_name'])
-                newFound.append(foundData['data']['items'][x]['properties']['born_on'])
-                newFound.append(foundData['data']['items'][x]['properties']['bio'])
-                newFound.append(foundData['data']['items'][x]['properties']['api_url'])
+                newFound = ["","","","","",""]
+                newFound[0]= (data["data"]['uuid'])
+                newFound[1]= (foundData['data']['items'][x]['properties']['first_name'])
+                newFound[2]= (foundData['data']['items'][x]['properties']['last_name'])
+                newFound[3]= (foundData['data']['items'][x]['properties']['born_on'])
+                newFound[4]= (foundData['data']['items'][x]['properties']['bio'])
+                newFound[5]= (foundData['data']['items'][x]['properties']['api_url'])
+                founderArray.append(newFound)
                 x += 1
             j = 0
             while j < len(catData['data']['items']):
                 newComp.append(catData['data']['items'][j]['properties']['name'])
                 j += 1
-            newFund.append(data["data"]['uuid'])
             if (fundingData['data']['paging']['total_items'] != 0):
                 numberOfFunding = fundingData['data']['paging']['total_items'] - 1
                 i123 = 0
                 while (i123 < numberOfFunding):
+                    newFund = ["","","","","","","","","","","","","","","","","","",""]
+                    newFund.append(data["data"]['uuid'])
+                    newFund[0] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['type'])
 
-                    newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['type'])
-
-                    newComp.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['type'])
+                    newFund[1] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['type'])
                     try:
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['investor_type'])
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['founded_on'])
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['short_description'])
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['total_funding_usd'])
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['number_of_investments'])
+                        newFund[2] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['investor_type'])
+                        newFund[3] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['founded_on'])
+                        newFund[4] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['short_description'])
+                        newFund[5] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['total_funding_usd'])
+                        newFund[6] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['relationships']['investors']['properties']['number_of_investments'])
 
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['money_invested_usd'])
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['announced_on'])
-                        newFund.append(fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['is_lead_investor'])
+                        newFund[7] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['money_invested_usd'])
+                        newFund[8] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['announced_on'])
+                        newFund[9] = (fundingData['data']['items'][i123]['relationships']['investments'][0]['properties']['is_lead_investor'])
                     except:
-                        print(1)
-                    newFund.append(fundingData['data']['items'][i123]['type'])
+                        print("in funding")
 
-                    newFund.append(fundingData['data']['items'][i123]['properties']['series'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['rank'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['pre_money_valuation'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['money_raised_usd'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['pre_money_valuation_usd'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['money_raised'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['updated_at'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['target_money_raised_usd'])
-                    newFund.append(fundingData['data']['items'][i123]['properties']['announced_on'])
+                    newFund[10] = (fundingData['data']['items'][i123]['properties']['series'])
+                    newFund[11] = (fundingData['data']['items'][i123]['properties']['rank'])
+                    newFund[12] = (fundingData['data']['items'][i123]['properties']['pre_money_valuation'])
+                    newFund[13] = (fundingData['data']['items'][i123]['properties']['money_raised_usd'])
+                    newFund[14] = (fundingData['data']['items'][i123]['properties']['pre_money_valuation_usd'])
+                    newFund[15] = (fundingData['data']['items'][i123]['properties']['money_raised'])
+                    newFund[16] = (fundingData['data']['items'][i123]['properties']['updated_at'])
+                    newFund[17] = (fundingData['data']['items'][i123]['properties']['target_money_raised_usd'])
+                    newFund[18] = (fundingData['data']['items'][i123]['properties']['announced_on'])
+                    fundingArray.append(newFund)
                     i123 += 1
         except:
-            print(1)
+            print("funding prob")
+        
 
 
     yugeArray.append(newComp)
-    founderArray.append(newFound)
-    fundingArray.append(newFund)
+    
 
 
     if i == len(newArr) - 1 or i%200 == 0:
-        fileName = 'newSaveFullCrunchbaseScrape' + str((i)/200) + '.csv'
+        fileName = 'newSaveFullCrunchbaseScrape' + str(((i)/200)+7) + '.csv'
         with open(fileName, 'w') as f:
             writer = csv.writer(f)
             writer.writerows(yugeArray)
-        fileName = 'newSaveFullCrunchbaseScrapeFounders' + str((i)/200) + '.csv'
-        with open(fileName, 'w') as f:
+        fileName1 = 'newSaveFullCrunchbaseScrapeFounders' + str(((i)/200)+7) + '.csv'
+        with open(fileName1, 'w') as f:
             writer = csv.writer(f)
             writer.writerows(founderArray)
-        fileName = 'newSaveFullCrunchbaseScrapeFunding' + str((i)/200) + '.csv'
-        with open(fileName, 'w') as f:
+        fileName2 = 'newSaveFullCrunchbaseScrapeFunding' + str(((i)/200)+7) + '.csv'
+        with open(fileName2, 'w') as f:
             writer = csv.writer(f)
             writer.writerows(fundingArray)
     i += 1
