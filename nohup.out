@@ -10,3 +10,8 @@
 /home/ubuntu/crunchbase/testCrunchbaseClone.py: 2: /home/ubuntu/crunchbase/testCrunchbaseClone.py: import: not found
 /home/ubuntu/crunchbase/testCrunchbaseClone.py: 3: /home/ubuntu/crunchbase/testCrunchbaseClone.py: import: not found
 /home/ubuntu/crunchbase/testCrunchbaseClone.py: 4: /home/ubuntu/crunchbase/testCrunchbaseClone.py: Syntax error: word unexpected (expecting ")")
+/home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: 1: /home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: import: not found
+/home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: 2: /home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: import: not found
+/home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: 3: /home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: import: not found
+/home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: 4: /home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: import: not found
+/home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: 5: /home/ubuntu/crunchbase2/crunchbase/testCrunchbaseClone.py: Syntax error: word unexpected (expecting ")")
